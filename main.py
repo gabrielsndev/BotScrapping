@@ -62,12 +62,18 @@ class Main:
         self.driver.find_elements(By.CSS_SELECTOR, 'a.GameCard__title_ig--ig-oEqAU')[0].click()
         sleep(10)
 
-        
+    def pegando_ultimos(self):
+        sleep(1)
+#        iframe = self.driver.find_elements(By.CSS_SELECTOR, 'iframe')[]
+#        self.driver.get(iframe.get_attribute('src'))
+#        sleep(2)
+
 
     def main(self):
         try:
             self.start()
             self.entrando_jogo()
+            self.pegando_ultimos()
         except Exception as e:
             logging.error(f"Erro: {e}", exc_info=True)
             if self.driver:
