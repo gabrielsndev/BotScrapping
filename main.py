@@ -45,29 +45,17 @@ class Main:
         self.config = json.load(open('config.json'))
         self.driver.get('https://br.parimatch.com/')
 
-    def entrando_jogo(self):
+    def entrando_jogo(self):        
+        self.driver.get('https://br.parimatch.com/pt/casino/instant-games/game/spribe-br-aviator-inst')
+        sleep(10)
+        iframe = self.driver.find_elements(By.CSS_SELECTOR, 'iframe[title="Aviator"]')[0]
+        #self.driver.switch_to.frame(iframe)
+        self.driver.get(iframe.get_attribute('src'))
+        sleep(5)
 
-        sleep(10)
-        self.driver.find_element(By.CSS_SELECTOR, '[data-id="header-instant-games"]').click()
-        sleep(5)
-        self.elements = self.driver.find_elements(By.CSS_SELECTOR, 'li.NavigationBlock__item_ig--ig-r4zue')
-        self.elements[4].click()
-        sleep(5)
-        self.input = self.driver.find_element(By.CSS_SELECTOR, 'input.Input__input_ig--ig-by18T.SearchInput__field_ig--ig-EyWJ_')
-        self.input.click()
-        self.input.send_keys('Aviator')
-        sleep(1)
-        self.input.send_keys(Keys.ENTER)
-        sleep(3)
-        self.driver.find_elements(By.CSS_SELECTOR, 'a.GameCard__title_ig--ig-oEqAU')[0].click()
-        sleep(10)
 
     def pegando_ultimos(self):
         sleep(1)
-#        iframe = self.driver.find_elements(By.CSS_SELECTOR, 'iframe')[]
-#        self.driver.get(iframe.get_attribute('src'))
-#        sleep(2)
-
 
     def main(self):
         try:
