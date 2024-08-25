@@ -3,9 +3,11 @@ import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from bs4 import BeautifulSoup
 from time import sleep
 import subprocess
 import platform
@@ -47,13 +49,21 @@ class Main:
 
     def entrando_jogo(self):        
         self.driver.get('https://br.parimatch.com/pt/casino/instant-games/game/spribe-br-aviator-inst')
-        sleep(10)
-        iframe = self.driver.find_elements(By.CSS_SELECTOR, 'iframe[title="Aviator"]')[0]
+        #sleep(10)
+        #iframe = self.driver.find_elements(By.CSS_SELECTOR, 'iframe[title="Aviator"]')[0]
         #self.driver.switch_to.frame(iframe)
-        self.driver.get(iframe.get_attribute('src'))
-        sleep(5)
-
-
+        #self.driver.get(iframe.get_attribute('src'))
+        #sleep(5)
+        WebDriverWait(self.driver, 10).until(
+        EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe[title='Aviator']"))
+        )
+        self.html = self.driver.page_source
+        self.soup = BeautifulSoup(self.html, 'html.parser')
+        data = self.soup.find_all("div", class_="bubble-multiplier.font-weight-bold")
+        resultados = []
+        for i in range(10):
+            resultados.append(data[i].get_text())
+        print(resultados)
     def pegando_ultimos(self):
         sleep(1)
 
